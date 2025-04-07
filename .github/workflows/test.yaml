@@ -57,7 +57,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
-      - uses: astral-sh/setup-uv@v3.2.2
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+          version: "0.6.7"
       - uses: charmed-kubernetes/actions-operator@main
         with:
           provider: lxd
@@ -91,6 +96,8 @@ jobs:
       #     juju model-defaults apt-http-proxy=$PROXY apt-https-proxy=$PROXY  juju-http-proxy=$PROXY juju-https-proxy=$PROXY  snap-http-proxy=$PROXY snap-https-proxy=$PROXY
       #     juju model-defaults
       - run: |
+          uv sync --all-groups
+          source .venv/bin/activate
           uv run pytest tests/integration/test_model.py::test_deploy_bundle_with_overlay_as_argument -vvv
 
         env:
