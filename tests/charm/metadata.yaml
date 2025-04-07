@@ -1,0 +1,5 @@
+name: charm
+series: ["focal"]
+summary: "test"
+description: "test"
+maintainers: ["test"]
