@@ -97,6 +97,7 @@ jobs:
       #     juju model-defaults
       - run: |
           uv sync --all-groups
+          uv pip install pytest
           source .venv/bin/activate
           uv run pytest tests/integration/test_model.py::test_deploy_bundle_with_overlay_as_argument -vvv
 
